@@ -1,0 +1,10 @@
+[
+    {
+        "id": "1",
+        "firstName": "Rich",
+        "lastName": "Hill",
+        "services": ["electrician", "handyMan"],
+        "aboutMe": "im a electrician with 6 years exp."
+
+    }
+]
