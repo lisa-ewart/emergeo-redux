@@ -22,12 +22,13 @@ const SimpleApp = StackNavigator({
   Home: {screen: HomeScreen},
   LogIn: {screen: SignIn},
   Join: {screen: SignUp},
-  CreateProfile: {screen: ChooseProfileSetup},
+  CreateProfileName: {screen: ProfileName},
   ProfileImage: {screen: ProfileImageSelector}
+  
 })
 
 export default class App extends Component {
-  state = { loggedIn: null }
+  state = { loggedIn: null, currentUser: null }
 
   componentWillMount(){
     const config = {
@@ -43,10 +44,12 @@ export default class App extends Component {
 
     firebase.auth().onAuthStateChanged( user =>{
       if(user){
-        this.setState({ loggedIn: true });
-        console.log(user)
+        this.setState({ loggedIn: true, currentUser: user.uid });
+        // console.log(user)
+        // console.log('id is' + user.uid)
+        // console.log('email is' + user.email)
       } else {
-        this.setState({ loggedIn: false });
+        this.setState({ loggedIn: false, currentUser: null });
       } 
   });
 }
@@ -55,12 +58,13 @@ export default class App extends Component {
 
   render() {
     const store = createStore(reducers);
-  
+    const {loggedIn, currentUser} = this.state
+    
 
     return (
       <Provider store={store}>
         <View style={{flex: 1}}>
-          <SignIn loggedIn={this.state.loggedIn}/>
+          <SimpleApp screenProps={{loggedIn, currentUser}} />
         </View>
       </Provider>
     );

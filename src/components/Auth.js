@@ -152,10 +152,10 @@ export class SignIn extends Component{
     }
 
 renderButton(){
-   switch(this.props.loggedIn){
+   switch(this.props.screenProps.loggedIn){
        case true:
             return (
-                <Button onPress={()=>Firebase.auth().signOut()}>
+                <Button onPress={()=>this.signOut()}>
                     Sign Out
                 </Button>
             );
@@ -170,6 +170,11 @@ renderButton(){
    }
 }
 
+signOut(){
+    // this.setState({this.props.currentUser: null});
+
+    Firebase.auth().signOut()
+}
 
 
 //THIS FUNCTION WILL HANDLE USER SIGN IN AND SIGN OUT
@@ -188,11 +193,16 @@ renderButton(){
         }
 
     onLoginSuccess(){
+        const {navigate} = this.props.navigation
+
         this.setState({
             email: '',
             password: '',
             loading: false
         });
+
+        navigate('CreateProfileName');
+
     }
 }
 
