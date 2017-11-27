@@ -121,8 +121,7 @@ export class SignIn extends Component{
 
 
     render(){
-            console.log(this.state)
-            console.log(this.props)
+         
         return(
             <View style={styles.container}>
                 <Content>
@@ -201,7 +200,7 @@ signOut(){
             loading: false
         });
 
-        navigate('CreateProfileName');
+        navigate('Profile');
 
     }
 }

@@ -2,19 +2,23 @@ import React, {Component} from 'react';
 import firebase from 'firebase';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { createStore } from 'redux';
+import {app, auth, database} from './src/firebase';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
-import reducers from './src/reducers';
+import rootReducers from './src/reducers';
 
 
 import HomeScreen from './src/components/HomeScreen';
 import {SignIn, SignUp} from './src/components/Auth';
 
 // Components being tested
-import ProfileImageSelector from './src/components/ProfileImageSelect';
 import ChooseProfileSetup from './src/components/ChooseProfileSetup';
 import ProfileName from './src/components/ProfileName';
+import ProfileImageSelector from './src/components/ProfileImageSelect';
+import MiniBio from './src/components/ProfileBio';
+import ProfileDetail from './src/components/ProfileDetail';
 
 
 
@@ -23,43 +27,37 @@ const SimpleApp = StackNavigator({
   LogIn: {screen: SignIn},
   Join: {screen: SignUp},
   CreateProfileName: {screen: ProfileName},
-  ProfileImage: {screen: ProfileImageSelector}
+  Profile: {screen: ProfileDetail}
   
-})
+});
 
 export default class App extends Component {
   state = { loggedIn: null, currentUser: null }
 
   componentWillMount(){
-    const config = {
-    apiKey: "AIzaSyC0eVfyQE_wiC-mZ_bfpJdjlax_xJ8Tv_E",
-    authDomain: "emergeo-4496e.firebaseapp.com",
-    databaseURL: "https://emergeo-4496e.firebaseio.com",
-    projectId: "emergeo-4496e",
-    storageBucket: "emergeo-4496e.appspot.com",
-    messagingSenderId: "613936575014"
-};
+    app;
 
-    firebase.initializeApp(config);
-
-    firebase.auth().onAuthStateChanged( user =>{
+    auth.onAuthStateChanged( user =>{
       if(user){
-        this.setState({ loggedIn: true, currentUser: user.uid });
-        // console.log(user)
-        // console.log('id is' + user.uid)
-        // console.log('email is' + user.email)
-      } else {
-        this.setState({ loggedIn: false, currentUser: null });
-      } 
-  });
+        this.setState({ loggedIn: true, currentUser: user.uid});
+     } else{
+        this.setState({loggedIn: false, currentUser: null})
+      }
+    });
+
+
 }
 
 
 
   render() {
-    const store = createStore(reducers);
-    const {loggedIn, currentUser} = this.state
+    const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+    const store = createStoreWithMiddleware(rootReducers)
     
+    const {loggedIn, currentUser} = this.state
+
+    // const id = auth.currentUser.uid
+    // console.log(id)
 
     return (
       <Provider store={store}>
@@ -70,6 +68,7 @@ export default class App extends Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
