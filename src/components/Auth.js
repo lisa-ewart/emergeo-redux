@@ -2,6 +2,7 @@ import Firebase from 'firebase';
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Card, } from 'native-base';
+import Spinner from './Spinner';
 
 
 
@@ -9,17 +10,17 @@ import Button from '../components/Button';
 
 
 
-const config = {
-    apiKey: "AIzaSyC0eVfyQE_wiC-mZ_bfpJdjlax_xJ8Tv_E",
-    authDomain: "emergeo-4496e.firebaseapp.com",
-    databaseURL: "https://emergeo-4496e.firebaseio.com",
-    projectId: "emergeo-4496e",
-    storageBucket: "emergeo-4496e.appspot.com",
-    messagingSenderId: "613936575014"
-};
+// const config = {
+//     apiKey: "AIzaSyC0eVfyQE_wiC-mZ_bfpJdjlax_xJ8Tv_E",
+//     authDomain: "emergeo-4496e.firebaseapp.com",
+//     databaseURL: "https://emergeo-4496e.firebaseio.com",
+//     projectId: "emergeo-4496e",
+//     storageBucket: "emergeo-4496e.appspot.com",
+//     messagingSenderId: "613936575014"
+// };
 
-const app = Firebase.initializeApp(config);
-const auth = Firebase.auth();
+// Firebase.initializeApp(config);
+
 
 export class SignUp extends Component{
 
@@ -42,7 +43,7 @@ export class SignUp extends Component{
 
 
     render(){
-        const {navigate} = this.props.navigation;
+        // const {navigate} = this.props.navigation;
             
         return(
             <View style={styles.container}>
@@ -68,7 +69,7 @@ export class SignUp extends Component{
     }
     //THIS FUNCTION WILL CREATE A USER ACCOUNT AND SIGN THEM IN
      createUser() {
-        const { navigate } = this.props.navigation;    
+        // const { navigate } = this.props.navigation;    
         const email = this.state.email
         const password = this.state.password
         console.log('i was pressed!');
@@ -82,7 +83,10 @@ export class SignUp extends Component{
         }
         //FIREBASE FUNCTION TO CREATE A NEW USER AND SIGN THEM IN
         Firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(()=> navigate('CreateProfile'))
+        .then(Firebase.auth().onAuthStateChanged( user => {
+
+            console.log(user)
+        }))
         .catch( function (error) {
             // Handle Errors here.
             const errorCode = error.code;
@@ -112,23 +116,12 @@ export class SignIn extends Component{
     state = {
         email:'',
         password:'',
+        loading: false
     };
-
-    handleUserEmail(text){
-        this.setState({
-            email: text
-        })
-    }
-
-    handleUserPassword(text){
-        this.setState({
-            password: text
-        })
-    }
 
 
     render(){
-            
+         
         return(
             <View style={styles.container}>
                 <Content>
@@ -136,55 +129,79 @@ export class SignIn extends Component{
                         <Form>
                             <Item stackedLabel>
                                 <Label>Email</Label>
-                                <Input onChangeText={(text)=> this.handleUserEmail(text)} />
+                                <Input 
+                                onChangeText={email => this.setState({ email })} 
+                                value={this.state.email}
+                                />
                             </Item>
                             <Item stackedLabel last>
                                 <Label>Password</Label>
                                 <Input
                                 secureTextEntry 
-                                onChangeText={(text)=>this.handleUserPassword(text)} />
+                                onChangeText={password =>this.setState({ password })} 
+                                value={this.state.password}
+                                />
                             </Item>
                         </Form>
                     </Card>
-                        <Button onPress={()=>this.toggleSignIn()}>
-                            Sign In
-                        </Button>
+                      {this.renderButton()}
                 </Content>
             </View>
         )
     }
 
+renderButton(){
+   switch(this.props.screenProps.loggedIn){
+       case true:
+            return (
+                <Button onPress={()=>this.signOut()}>
+                    Sign Out
+                </Button>
+            );
+        case false:
+            return (
+                <Button onPress={()=>this.toggleSignIn()}>
+                    Sign In
+                </Button>
+            );
+        default:
+            return <Spinner/>
+   }
+}
 
+signOut(){
+    // this.setState({this.props.currentUser: null});
 
+    Firebase.auth().signOut()
+}
 
 
 //THIS FUNCTION WILL HANDLE USER SIGN IN AND SIGN OUT
-toggleSignIn(){
-    //  const { navigate } = this.props.navigation;    
-        const email = this.state.email
-        const password = this.state.password
-    //CHECKS IF CURRENT USER IS SIGNED IN AND BEGINS SIGN OUT
-    if( Firebase.auth().currentUser){
-         Firebase.auth().signOut()
-    }
-    else{
-        // const email = // attach email element
-        // const password = // attach password element field
-        if(email.length < 4){
-            alert('Please enter a valid email address!')
-        }
-        if(password.length < 4){
-            alert('Please enter a valid password!')
-        }
+    toggleSignIn(){
+   
+      const {email, password} = this.state;
+
+      this.setState({ loading: true });
 
         Firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(Firebase.auth().onAuthStateChanged(user =>{
-            console.log(user)
-        }))
+        .then(this.onLoginSuccess.bind(this))
         .catch(error =>{
-                alert('Some Error!')
+                alert(error.message)
+                alert(error.code)
             })
         }
+
+    onLoginSuccess(){
+        const {navigate} = this.props.navigation
+
+        this.setState({
+            email: '',
+            password: '',
+            loading: false
+        });
+
+        navigate('Profile');
+
     }
 }
 
