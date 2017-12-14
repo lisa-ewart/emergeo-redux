@@ -46,7 +46,7 @@ render(){
                 </View>
                 <View style={profilePicContainer}>
                     <Image source={require('../../assets/images/emergeoPic.jpg')} style={profilePic}/>
-                    <Text style={profileNameDisplay}>{firstName}</Text>
+                    <Text style={profileNameDisplay}>Rich.H</Text>
                 </View>
                 <View style={ratingStyle}>
                     <Text>Rating</Text>
@@ -56,6 +56,7 @@ render(){
                 <View style={infoContainer}>
                     <Text style={infoTitle}>Services</Text>   
                     <Text style={infoTitle}>About me</Text>
+                    <Text>somthing</Text>
                     <Text style={infoTitle}>Accepted Payments</Text>
                 </View>
             </CardSection>
@@ -127,9 +128,9 @@ const mapStateToProps = state => {
     return {profile: state.profile}
 };
 
-const mapDispatchToProps = (dispatch) =>{
-    return { fetchProf: () => dispatch(getProfile)}
-}
+const mapDispatchToProps = dispatch => {
+    return { fetchProf: () => dispatch(getProfile()) }
+};
 
 
 

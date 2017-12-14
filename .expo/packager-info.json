@@ -1,8 +1,8 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 9604,
-  "expoServerNgrokUrl": "https://d3-8tx.rhillx.emergeo-redux.exp.direct",
-  "packagerNgrokUrl": "https://packager.d3-8tx.rhillx.emergeo-redux.exp.direct",
-  "ngrokPid": 24792
+  "packagerPid": 55576,
+  "expoServerNgrokUrl": "https://bg-wa6.rhillx.emergeo-redux.exp.direct",
+  "packagerNgrokUrl": "https://packager.bg-wa6.rhillx.emergeo-redux.exp.direct",
+  "ngrokPid": 50588
 }
