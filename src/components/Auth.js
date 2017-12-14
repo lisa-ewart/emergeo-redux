@@ -200,7 +200,7 @@ signOut(){
             loading: false
         });
 
-        navigate('Profile');
+        navigate('CreateProfileName');
 
     }
 }

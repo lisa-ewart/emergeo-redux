@@ -27,6 +27,7 @@ const SimpleApp = StackNavigator({
   LogIn: {screen: SignIn},
   Join: {screen: SignUp},
   CreateProfileName: {screen: ProfileName},
+  CreateProfileBio: {screen: MiniBio},
   Profile: {screen: ProfileDetail}
   
 });
@@ -57,12 +58,12 @@ export default class App extends Component {
     const {loggedIn, currentUser} = this.state
 
     // const id = auth.currentUser.uid
-    // console.log(id)
+    console.log(this.state)
 
     return (
       <Provider store={store}>
         <View style={{flex: 1}}>
-          <SimpleApp screenProps={{loggedIn, currentUser}} />
+          <ProfileImageSelector screenProps={{loggedIn, currentUser}} />
         </View>
       </Provider>
     );

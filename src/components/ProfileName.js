@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import {Text, View, TextInput, KeyboardAvoidingView} from 'react-native';
-import firebase from 'firebase';
+import {database} from '../firebase';
 import Button from './Button';
 
 
 class ProfileName extends Component{
-  state = {
-      firstName: '',
-      lastName: '',
-  }
+    state = {
+        firstName: "",
+        lastName: ""
+    }
 
     render(){
+        console.log(this.props)
+
         const {
             textContainer, 
             profileNameText,
@@ -41,7 +43,7 @@ class ProfileName extends Component{
                         onChangeText={lastName => this.setState({lastName})}
                         value={this.state.lastName}
                     /> 
-                    <Button onPress={()=>this.createUserName()}>
+                    <Button onPress={() => this.createName()}>
                         Continue
                     </Button>
                 </KeyboardAvoidingView>  
@@ -51,16 +53,16 @@ class ProfileName extends Component{
         )
     }
 
-createUserName(){
-    const {firstName, lastName} = this.state
-    const uid = this.props.screenProps.currentUser
-    const {navigate} = this.props.navigation
+createName(){
+    const {firstName, lastName} = this.state;
+    const uid = this.props.screenProps.currentUser;
+    const {navigate} = this.props.navigation;
 
-    firebase.database().ref().child('Users/' + uid ).set({
+    database.ref('Users/' + uid).child('UserName').set({
         firstName: firstName,
         lastName: lastName
     })
-    .then(()=> navigate('ProfileImage'))
+    .then(()=> navigate('CreateProfileBio'))
 }
 
 }
@@ -97,4 +99,6 @@ const styles ={
     }
 }
 
-export default ProfileName
+
+
+export default ProfileName;
