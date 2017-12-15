@@ -19,9 +19,6 @@ render(){
             <Button onPress={()=> alert('pressed 2')}>
                 Looking for Service Providers
             </Button>
-            
-        
-
         </View>
     )
 }

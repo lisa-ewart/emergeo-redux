@@ -19,6 +19,7 @@ import ProfileName from './src/components/ProfileName';
 import ProfileImageSelector from './src/components/ProfileImageSelect';
 import MiniBio from './src/components/ProfileBio';
 import ProfileDetail from './src/components/ProfileDetail';
+import ServiceList from './src/components/ServiceList';
 
 
 
@@ -29,6 +30,7 @@ const SimpleApp = StackNavigator({
   CreateProfileName: {screen: ProfileName},
   CreateProfileBio: {screen: MiniBio},
   Profile: {screen: ProfileDetail}
+
   
 });
 
@@ -49,8 +51,6 @@ export default class App extends Component {
 
 }
 
-
-
   render() {
     const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
     const store = createStoreWithMiddleware(rootReducers)
@@ -63,7 +63,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <View style={{flex: 1}}>
-          <ProfileImageSelector screenProps={{loggedIn, currentUser}} />
+          <SimpleApp screenProps={{loggedIn, currentUser}} />
         </View>
       </Provider>
     );

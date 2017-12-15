@@ -32,8 +32,8 @@ class HomeScreen extends Component{
         return(
         <View style={styles.container}>
             <BackgroundImage>
-               <Text style={styles.text}>emerge<Image source={require('../../assets/images/emergeologo.png')} style={{height: 100,
-                    width: 41,marginTop:39, marginLeft:-4, }}>
+               <Text style={styles.text}><Image source={require('../../assets/images/emergeologo.png')} style={{height: 140,
+                    width: 140,marginTop:39, marginLeft:-4, }}>
                    </Image>
                 </Text>
                 <View>

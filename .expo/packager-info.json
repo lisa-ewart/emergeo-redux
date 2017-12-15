@@ -1,7 +1,7 @@
 {
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 55576,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
   "expoServerNgrokUrl": "https://bg-wa6.rhillx.emergeo-redux.exp.direct",
   "packagerNgrokUrl": "https://packager.bg-wa6.rhillx.emergeo-redux.exp.direct",
   "ngrokPid": 50588
