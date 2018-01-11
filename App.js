@@ -20,6 +20,7 @@ import ProfileImageSelector from './src/components/ProfileImageSelect';
 import MiniBio from './src/components/ProfileBio';
 import ProfileDetail from './src/components/ProfileDetail';
 import ServiceList from './src/components/ServiceList';
+import ServiceSelector from './src/components/ServiceSelector';
 
 
 
@@ -29,7 +30,8 @@ const SimpleApp = StackNavigator({
   Join: {screen: SignUp},
   CreateProfileName: {screen: ProfileName},
   CreateProfileBio: {screen: MiniBio},
-  Profile: {screen: ProfileDetail}
+  Profile: {screen: ProfileDetail},
+  Services: {screen: ServiceList}
 
   
 });

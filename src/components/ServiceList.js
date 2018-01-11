@@ -33,11 +33,12 @@ class ServiceList extends Component {
 			<ListView
 				dataSource = {this.dataSource}
 				renderRow= {this.renderRow}
-		
 			/>
+
 			<View>
 				<Text>HI</Text>
 			</View>
+			
 			</View>
 		)
 	}

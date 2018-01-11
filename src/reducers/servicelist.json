@@ -1,0 +1,35 @@
+[
+{
+	"label": "Electrician",
+	"value": "0001"
+},
+{
+	"label": "Plumber",
+	"value": "0002"
+},
+{
+	"label": "HVAC",
+	"value": "0003"
+},
+{
+	"label": "Landscaper",
+	"value": "0004"
+},
+{
+	"label": "Roofer",
+	"value": "0005"
+},
+{
+	"label": "Trainer",
+	"value": "0006"
+},
+{
+	"label": "Carpenter",
+	"value": "0007"
+},
+{
+	"label": "Auto Mechanic",
+	"value": "0008"
+}
+
+]
