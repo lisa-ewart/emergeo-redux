@@ -22,6 +22,8 @@ import ProfileDetail from './src/components/ProfileDetail';
 import ServiceList from './src/components/ServiceList';
 import ServiceSelector from './src/components/ServiceSelector';
 
+import FetchLocation from './src/components/FetchLocation';
+import UsersMap from './src/components/UsersMap';
 
 
 const SimpleApp = StackNavigator({
@@ -38,6 +40,13 @@ const SimpleApp = StackNavigator({
 
 export default class App extends Component {
   state = { loggedIn: null, currentUser: null }
+
+  getUserLocationHandler = () => {
+    navigator.geolocation.getCurrentPosition(position => {
+      console.log(position);
+    }, err => console.log(err));
+
+  }
 
   componentWillMount(){
     app;
@@ -62,12 +71,13 @@ export default class App extends Component {
     // const id = auth.currentUser.uid
     console.log(this.state)
 
+
+
     return (
-      <Provider store={store}>
-        <View style={{flex: 1}}>
-          <SimpleApp screenProps={{loggedIn, currentUser}} />
+        <View style={styles.container}>
+          <FetchLocation onGetLocation={this.getUserLocationHandler}/>
+          <UsersMap />
         </View>
-      </Provider>
     );
   }
 }
@@ -81,3 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+
+//<SimpleApp screenProps={{loggedIn, currentUser}} />

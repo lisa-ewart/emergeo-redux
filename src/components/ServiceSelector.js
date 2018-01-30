@@ -11,7 +11,7 @@ class ServiceSelector extends Component {
   state = { selected: [] }
 
   componentWillMount(){
-    this.props.getServices()
+    this.props.getServices();
 
 
   }
@@ -21,8 +21,10 @@ class ServiceSelector extends Component {
     this.setState({ selected })
   }
  
-  render () {
+  render() {
+
     const serviceList = this.props.services;
+
     return (
       <View>
         <SelectMultiple
