@@ -20,10 +20,10 @@ import ProfileImageSelector from './src/components/ProfileImageSelect';
 import MiniBio from './src/components/ProfileBio';
 import ProfileDetail from './src/components/ProfileDetail';
 import ServiceList from './src/components/ServiceList';
-import ServiceSelector from './src/components/ServiceSelector';
+import MapSearch from './src/components/Map';
 
-import FetchLocation from './src/components/FetchLocation';
-import UsersMap from './src/components/UsersMap';
+//component for mapsearch
+import MapList from './src/components/MapList';
 
 
 const SimpleApp = StackNavigator({
@@ -32,21 +32,13 @@ const SimpleApp = StackNavigator({
   Join: {screen: SignUp},
   CreateProfileName: {screen: ProfileName},
   CreateProfileBio: {screen: MiniBio},
-  Profile: {screen: ProfileDetail},
-  Services: {screen: ServiceList}
+  Profile: {screen: ProfileDetail}
 
   
 });
 
 export default class App extends Component {
   state = { loggedIn: null, currentUser: null }
-
-  getUserLocationHandler = () => {
-    navigator.geolocation.getCurrentPosition(position => {
-      console.log(position);
-    }, err => console.log(err));
-
-  }
 
   componentWillMount(){
     app;
@@ -71,13 +63,12 @@ export default class App extends Component {
     // const id = auth.currentUser.uid
     console.log(this.state)
 
-
-
     return (
-        <View style={styles.container}>
-          <FetchLocation onGetLocation={this.getUserLocationHandler}/>
-          <UsersMap />
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <MapSearch screenProps={{loggedIn, currentUser}}>< /MapSearch>
         </View>
+      </Provider>
     );
   }
 }
@@ -91,7 +82,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-
-
-//<SimpleApp screenProps={{loggedIn, currentUser}} />
